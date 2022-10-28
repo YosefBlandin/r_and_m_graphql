@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { IoHeartSharp, IoCheckmarkCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFavoriteCharacter } from "../../store/reducer/moviesReducer";
@@ -9,7 +9,6 @@ import styles from "./styles.module.css";
 
 type CharacterCard = {
   id: number;
-  expanded: boolean;
   name: string;
   img: string;
   contentType: string;
@@ -23,22 +22,12 @@ export const CharacterCard: FC<CharacterCard> = ({
   contentType,
   handleClick,
 }) => {
-  const [selectedId, setSelectedId] = useState(false);
   const favoriteCharacters = useSelector(
     (state: any) => state.movies.favoriteCharacters
   );
   const dispatch = useDispatch();
   return (
-    <motion.article
-      className={styles.CharacterCard}
-      animate={{
-        zIndex: selectedId ? "100" : "0",
-        position: selectedId ? "fixed" : "static",
-        top: selectedId ? "50%" : 0,
-        right: selectedId ? "50%" : 0,
-        transform: selectedId ? "translate(50%, -50%)" : "translate(0,0)",
-      }}
-    >
+    <article className={styles.CharacterCard}>
       <picture className={styles.CharacterCard__image}>
         <Image
           src={img}
@@ -73,15 +62,12 @@ export const CharacterCard: FC<CharacterCard> = ({
             Add to Favorite
           </button>
         )}
-        {/* <Link href={`character/${id}`}> */}
-        <button
-          className="btn btn-primary w-100 mt-2 py-2 fw-bold"
-          onClick={() => setSelectedId(!selectedId)}
-        >
-          Details
-        </button>
-        {/* </Link> */}
+        <Link href={`character/${id}`}>
+          <button className="btn btn-primary w-100 mt-2 py-2 fw-bold">
+            Details
+          </button>
+        </Link>
       </section>
-    </motion.article>
+    </article>
   );
 };

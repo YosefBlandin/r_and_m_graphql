@@ -1,22 +1,13 @@
+import { gql } from "@apollo/client";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import client from "../../apollo-client";
 
-const CharacterDetails = () => {
-  const router = useRouter();
-  const { characterId } = router.query;
-  const [characterDetails, setCharacterDetails] = useState<any>({});
-  useEffect(() => {
-    const fetchCharacterDetails = async () => {
-      const data = await axios.get(
-        `/api/characterDetails/?characterId=${characterId}`
-      );
-      console.log("BANG", data);
-      setCharacterDetails(data.data);
-    };
-    fetchCharacterDetails();
-  }, []);
+const CharacterDetails: FC<{ characterDetails: any }> = ({
+  characterDetails,
+}) => {
   return (
     <section className="d-flex flex-wrap justify-content-center my-4 pb-4">
       <Image
@@ -38,5 +29,33 @@ const CharacterDetails = () => {
     </section>
   );
 };
+
+export async function getServerSideProps({
+  params,
+}: {
+  params: { characterId: string | number };
+}) {
+  const { data } = await client.query({
+    query: gql`
+		query ExampleQuery {
+			character(id: ${params.characterId.toString()}) {
+				name
+				image
+				origin {
+					name
+				}
+				species
+				status
+				gender
+			}
+		}
+    `,
+  });
+  return {
+    props: {
+      characterDetails: data.character,
+    },
+  };
+}
 
 export default CharacterDetails;

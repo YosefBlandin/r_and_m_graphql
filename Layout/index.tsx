@@ -13,7 +13,7 @@ export const Layout: FC<any> = ({ children }) => {
       <section className={styles.hero}>
         <Link href={"/"}>
           <h1 className={styles.hero__title}>
-            Welcome to R&M by Yosef Blandin
+            Welcome to R&M with GraphQL by Yosef Blandin
           </h1>
         </Link>
       </section>
