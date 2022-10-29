@@ -27,7 +27,10 @@ export const CharacterCard: FC<CharacterCard> = ({
   );
   const dispatch = useDispatch();
   return (
-    <article className={styles.CharacterCard}>
+    <article
+      className={styles.CharacterCard}
+      data-testid="styles_CharacterCard"
+    >
       <picture className={styles.CharacterCard__image}>
         <Image
           src={img}

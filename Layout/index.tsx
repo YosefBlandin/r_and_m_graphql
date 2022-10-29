@@ -21,8 +21,12 @@ export const Layout: FC<any> = ({ children }) => {
       <nav className={styles.navContainer}>
         <ul>
           <Link href={"/favoriteCharacters"}>
-            <li className={"btn btn-outline-primary py-3 px-4 my-2 fw-bold"}>
-              {favoriteCharacters.length} Favorite Characters
+            <li>
+              <button
+                className={"btn btn-outline-primary py-3 px-4 my-2 fw-bold"}
+              >
+                {favoriteCharacters.length} Favorite Characters
+              </button>
             </li>
           </Link>
         </ul>

@@ -28,7 +28,10 @@ const Home: NextPage<{ characters: any[] }> = ({ characters }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <section className={styles.cardsContainer}>
+        <section
+          className={styles.cardsContainer}
+          data-testid="Home_cardsContainer"
+        >
           {characters.map((character: any) => (
             <CharacterCard
               handleClick={() => handleAddFavoriteCharacter(character)}
