@@ -2,23 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface CounterState {
-  movies: any;
+  characters: any[];
+  searchValue: string;
+  filteredCharacters: any[];
   featuredMovie: any;
   favoriteCharacters: any;
 }
 
 const initialState: CounterState = {
-  movies: [],
+  characters: [],
+  searchValue: "",
+  filteredCharacters: [],
   featuredMovie: {},
   favoriteCharacters: [],
 };
 
-export const moviesSlice = createSlice({
-  name: "movies",
+export const charactersSlice = createSlice({
+  name: "characters",
   initialState,
   reducers: {
-    addMovies: (state, action) => {
-      state.movies = action.payload;
+    addCharacters: (state, action) => {
+      state.characters = action.payload;
+      state.filteredCharacters = action.payload;
     },
     setFeaturedMovie: (state, action) => {
       state.featuredMovie = action.payload;
@@ -31,15 +36,26 @@ export const moviesSlice = createSlice({
         (character: any) => character.name !== action.payload
       );
     },
+    searchCharacter(state, action) {
+      state.searchValue = action.payload;
+      if (action.payload.length > 0) {
+        state.filteredCharacters = state.characters.filter((character) =>
+          character.name.toLowerCase().includes(action.payload.toLowerCase())
+        );
+      } else {
+        state.filteredCharacters = state.characters;
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  addMovies,
+  addCharacters,
   setFeaturedMovie,
   addFavoriteCharacter,
   removeFavoriteCharacter,
-} = moviesSlice.actions;
+  searchCharacter,
+} = charactersSlice.actions;
 
-export default moviesSlice.reducer;
+export default charactersSlice.reducer;

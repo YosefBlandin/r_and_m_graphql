@@ -23,9 +23,10 @@ export const CharacterCard: FC<CharacterCard> = ({
   handleClick,
 }) => {
   const favoriteCharacters = useSelector(
-    (state: any) => state.movies.favoriteCharacters
+    (state: any) => state.characters.favoriteCharacters
   );
   const dispatch = useDispatch();
+
   return (
     <article
       className={styles.CharacterCard}

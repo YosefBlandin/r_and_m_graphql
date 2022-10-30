@@ -1,12 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import Link from "next/link";
+import { SearchBar } from "../components/SearchBar";
 
 export const Layout: FC<any> = ({ children }) => {
   const favoriteCharacters = useSelector(
-    (state: any) => state.movies.favoriteCharacters
+    (state: any) => state.characters.favoriteCharacters
   );
   return (
     <>
@@ -19,7 +20,7 @@ export const Layout: FC<any> = ({ children }) => {
       </section>
 
       <nav className={styles.navContainer}>
-        <ul>
+        <ul className={styles.navContainerList}>
           <Link href={"/favoriteCharacters"}>
             <li>
               <button
@@ -29,6 +30,7 @@ export const Layout: FC<any> = ({ children }) => {
               </button>
             </li>
           </Link>
+          <SearchBar />
         </ul>
       </nav>
       {children}

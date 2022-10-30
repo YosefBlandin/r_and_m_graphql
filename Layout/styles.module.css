@@ -5,9 +5,10 @@
   background: #fff;
 }
 
-.navContainer ul {
+.navContainerList {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   width: 100%;
   column-gap: 50px;
   list-style: none;
@@ -62,6 +63,14 @@
     width: 100%;
     padding: 20px 80px;
     font-weight: bold;
+  }
+  .navContainerList {
+    display: grid;
+    grid-template-columns: 250px minmax(500px, 1fr);
+    width: 100%;
+    column-gap: 50px;
+    list-style: none;
+    margin-bottom: 0;
   }
   .hero {
     height: 300px;

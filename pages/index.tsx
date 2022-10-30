@@ -1,25 +1,28 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { CharacterCard } from "../components/CharacterCard";
 import {
   addFavoriteCharacter,
-  addMovies,
-  setFeaturedMovie,
+  addCharacters,
 } from "../store/reducer/moviesReducer";
 import styles from "../styles/Home.module.css";
-import { Layout } from "../Layout";
 import client from "../apollo-client";
 import { gql } from "@apollo/client";
+import { NotCharactersFound } from "../components/NotCharactersFound";
 
 const Home: NextPage<{ characters: any[] }> = ({ characters }) => {
   const dispatch = useDispatch();
-
-  const handleAddFavoriteCharacter = (movie: any) => {
-    dispatch(addFavoriteCharacter(movie));
+  const charactersData = useSelector(
+    (state: any) => state.characters.filteredCharacters
+  );
+  const handleAddFavoriteCharacter = (character: any) => {
+    dispatch(addFavoriteCharacter(character));
   };
+  useEffect(() => {
+    dispatch(addCharacters(characters));
+  }, []);
   return (
     <div className={styles.container}>
       <Head>
@@ -28,21 +31,25 @@ const Home: NextPage<{ characters: any[] }> = ({ characters }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <section
-          className={styles.cardsContainer}
-          data-testid="Home_cardsContainer"
-        >
-          {characters.map((character: any) => (
-            <CharacterCard
-              handleClick={() => handleAddFavoriteCharacter(character)}
-              key={character.id}
-              id={character.id}
-              img={character.image}
-              name={character.name}
-              contentType={character.species}
-            />
-          ))}
-        </section>
+        {charactersData.length > 0 ? (
+          <section
+            className={styles.cardsContainer}
+            data-testid="Home_cardsContainer"
+          >
+            {charactersData.map((character: any) => (
+              <CharacterCard
+                handleClick={() => handleAddFavoriteCharacter(character)}
+                key={character.id}
+                id={character.id}
+                img={character.image}
+                name={character.name}
+                contentType={character.species}
+              />
+            ))}
+          </section>
+        ) : (
+          <NotCharactersFound />
+        )}
       </main>
     </div>
   );

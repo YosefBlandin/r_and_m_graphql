@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CharacterCard } from "../../components/CharacterCard";
 import styles from "../../styles/Home.module.css";
 
 const FavoriteCharacters = () => {
   const favoriteCharacters = useSelector(
-    (state: any) => state.movies.favoriteCharacters
+    (state: any) => state.characters.favoriteCharacters
   );
   return (
     <>
